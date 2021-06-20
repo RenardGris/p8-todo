@@ -160,6 +160,26 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame($task->getTitle(), $this->objectManager->getRepository(Task::class)->find($task->getId())->getTitle());
     }
 
+    public function testDeleteUserTaskAsAdmin()
+    {
+        self::logAsAdmin();
+        $task = self::getUserTask();
+        $this->client->request('GET', '/tasks/'. $task->getId() .'/delete');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "Vous n'avez pas les autorisations requises", $crawler->filter('div.alert.alert-danger')->text());
+        $this->assertSame($task->getTitle(), $this->objectManager->getRepository(Task::class)->find($task->getId())->getTitle());
+    }
+
+    public function testDeleteAdminTaskAsUser()
+    {
+        self::logAsUser();
+        $task = self::getAdminTask();
+        $this->client->request('GET', '/tasks/'. $task->getId() .'/delete');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "Vous n'avez pas les autorisations requises", $crawler->filter('div.alert.alert-danger')->text());
+        $this->assertSame($task->getTitle(), $this->objectManager->getRepository(Task::class)->find($task->getId())->getTitle());
+    }
+
     //Needed for auth
     public function logAsAdmin ()
     {
