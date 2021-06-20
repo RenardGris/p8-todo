@@ -22,6 +22,7 @@ class UserControllerTest extends WebTestCase
     //check if /user request return http code is equal to 200
     public function testListAction()
     {
+        self::logAsAdmin();
         $this->client->request('GET', '/users');
         static::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode() );
     }
