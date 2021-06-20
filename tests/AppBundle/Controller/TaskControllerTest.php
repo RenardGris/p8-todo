@@ -89,7 +89,20 @@ class TaskControllerTest extends WebTestCase
         $this->assertContains( "La tâche a bien été modifié", $crawler->filter('div.alert.alert-success')->text());
     }
 
-
+    //update user task and check if alert contain validation text
+    public function testEditTaskActionAsUser()
+    {
+        self::logAsUser();
+        $crawler = $this->client->request('GET', '/tasks/'. $this->userTask->getId() .'/edit');
+        $form = $crawler->selectButton('Modifier')->form();
+        $this->client->submit($form, [
+            "task[title]" => "Tache de test User",
+            "task[content]" => "Tache editée lors d'un test fonctionnel"
+        ]);
+        //$this->client->submit($form);
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "La tâche a bien été modifié", $crawler->filter('div.alert.alert-success')->text());
+    }
 
     public function testToggleTaskAction()
     {
