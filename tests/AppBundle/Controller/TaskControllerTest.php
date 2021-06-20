@@ -150,7 +150,15 @@ class TaskControllerTest extends WebTestCase
         //$this->assertEmpty($this->objectManager->getRepository(Task::class)->find($task->getId()));
     }
 
-
+    public function testDeleteAnonTaskAsUser()
+    {
+        self::logAsUser();
+        $task = self::getAnonTask();
+        $this->client->request('GET', '/tasks/'. $task->getId() .'/delete');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "Vous n'avez pas les autorisations requises", $crawler->filter('div.alert.alert-danger')->text());
+        $this->assertSame($task->getTitle(), $this->objectManager->getRepository(Task::class)->find($task->getId())->getTitle());
+    }
 
     //Needed for auth
     public function logAsAdmin ()
