@@ -3,16 +3,21 @@
 namespace Tests\AppBundle\Entity;
 
 
+use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserTest extends WebTestCase
 {
     private $user;
+    private $task;
 
     public function setUp()
     {
         $this->user = new User();
+        $this->user->setRoles('ROLE_USER');
+        $this->task = new Task();
+        $this->task->setTitle("test");
     }
 
     public function testId()
@@ -46,6 +51,19 @@ class UserTest extends WebTestCase
     {
         $this->user->setPassword('DumbPassword');
         $this->assertSame('DumbPassword', $this->user->getPassword());
+    }
+
+    public function testAddTask()
+    {
+        $this->user->addTask($this->task);
+        $tasks = $this->user->getTasks();
+        $this->assertSame("test", $tasks[0]->getTitle());
+    }
+
+    public function testTasks()
+    {
+        $this->user->removeTask($this->task);
+        $this->assertEmpty($this->user->getTasks());
     }
 
 }
