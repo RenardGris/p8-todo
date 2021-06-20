@@ -55,15 +55,16 @@ class UserControllerTest extends WebTestCase
     //update user and check if alert contain validation text
     public function testEditAction()
     {
-
-        $crawler = $this->client->request('GET', '/users/8/edit');
+        self::logAsAdmin();
+        $user = self::getUser();
+        $crawler = $this->client->request('GET', '/users/'. $user->getId() .'/edit');
         $form = $crawler->selectButton('Modifier')->form();
         $randomizer = round(rand(101,1000));
         $this->client->submit($form, [
             "user[username]" => "testEditUser" . $randomizer,
-            "user[password][first]" => "testPassEdit",
-            "user[password][second]" => "testPassEdit",
-            "user[email]" => "testEditUser".$randomizer."@gmail.com"
+            "user[password][first]" => "demo1",
+            "user[password][second]" => "demo1",
+            "user[email]" => "user1@email.com"
         ]);
         //$this->client->submit($form);
         $crawler =  $this->client->followRedirect();
