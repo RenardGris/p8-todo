@@ -59,6 +59,21 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame("Tache de test", self::getInsertTask()->getTitle());
     }
 
+    //Insert new task logged as user with ROLE_USER and check if alert contain validation text
+    public function testCreateActionAsUser()
+    {
+        self::logAsUser();
+        $crawler = $this->client->request('GET', '/tasks/create');
+        $form = $crawler->selectButton('Ajouter')->form();
+        $this->client->submit($form, [
+            "task[title]" => "Tache de test User",
+            "task[content]" => "Tache enregistrée lors d'un test fonctionnel"
+        ]);
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "La tâche a été bien été ajoutée.", $crawler->filter('div.alert.alert-success')->text());
+        $this->assertSame("Tache de test User", self::getInsertTaskFromUser()->getTitle());
+    }
+
     //update task and check if alert contain validation text
     public function testEditTaskAction()
     {
