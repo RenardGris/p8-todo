@@ -78,10 +78,10 @@ class TaskControllerTest extends WebTestCase
     public function testEditTaskAction()
     {
         self::logAsAdmin();
-        $crawler = $this->client->request('GET', '/tasks/4/edit');
+        $crawler = $this->client->request('GET', '/tasks/'. $this->task->getId() .'/edit');
         $form = $crawler->selectButton('Modifier')->form();
         $this->client->submit($form, [
-            "task[title]" => "Tache de test editée",
+            "task[title]" => "Tache de test",
             "task[content]" => "Tache editée lors d'un test fonctionnel"
         ]);
         //$this->client->submit($form);
