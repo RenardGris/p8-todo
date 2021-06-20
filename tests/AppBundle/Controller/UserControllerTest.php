@@ -37,16 +37,17 @@ class UserControllerTest extends WebTestCase
     //Insert new user and check if alert contain validation text
     public function testCreateAction()
     {
+        self::logAsAdmin();
         $crawler = $this->client->request('GET', '/users/create');
         $form = $crawler->selectButton('Ajouter')->form();
         $randomizer = round(rand(1,100));
         $this->client->submit($form, [
             "user[username]" => "testUser" . $randomizer,
-            "user[password][first]" => "testPass",
-            "user[password][second]" => "testPass",
-            "user[email]" => "testUser".$randomizer."@gmail.com"
+            "user[password][first]" => "demo",
+            "user[password][second]" => "demo",
+            "user[email]" => "testUser".$randomizer."@gmail.com",
+            "user[roles]" => "ROLE_USER",
         ]);
-        //$this->client->submit($form);
         $crawler =  $this->client->followRedirect();
         $this->assertContains( "L'utilisateur a bien été ajouté.", $crawler->filter('div.alert.alert-success')->text());
     }
