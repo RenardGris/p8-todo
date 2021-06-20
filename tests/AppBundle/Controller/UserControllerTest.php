@@ -61,5 +61,30 @@ class UserControllerTest extends WebTestCase
         $this->assertContains( "L'utilisateur a bien été modifié", $crawler->filter('div.alert.alert-success')->text());
     }
 
+    //Needed for auth
+    public function logAsAdmin ()
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $form = $crawler->selectButton('Se connecter')->form();
+        $this->client->submit($form, [
+            '_username' => 'admin',
+            '_password' => 'demo'
+        ]);
+    }
+
+    public function logAsUser ()
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $form = $crawler->selectButton('Se connecter')->form();
+        $this->client->submit($form, [
+            '_username' => 'user',
+            '_password' => 'demo'
+        ]);
+    }
+
+    public function getUser()
+    {
+        return $this->objectManager->getRepository(User::class)->findOneBy(['email'=>'user1@email.com']);
+    }
 
 }
