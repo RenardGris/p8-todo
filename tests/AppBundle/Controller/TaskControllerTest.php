@@ -35,6 +35,15 @@ class TaskControllerTest extends WebTestCase
         static::assertCount(count($this->objectManager->getRepository(Task::class)->findAll()), $crawler->filter('div.col-sm-4.col-lg-4.col-md-4'));
     }
 
+    //check if /task request return http code is equal to 200
+    public function testListActionAsUser()
+    {
+        self::logAsUser();
+        $crawler = $this->client->request('GET', '/tasks');
+        static::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode() );
+        static::assertCount(count($this->objectManager->getRepository(Task::class)->findAll()), $crawler->filter('div.col-sm-4.col-lg-4.col-md-4'));
+    }
+
     //Insert new task and check if alert contain validation text
     public function testCreateAction()
     {
