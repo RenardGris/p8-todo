@@ -131,6 +131,15 @@ class TaskControllerTest extends WebTestCase
         $this->assertEmpty(self::getInsertTask());
     }
 
+    public function testDeleteTaskActionAsUser()
+    {
+        self::logAsUser();
+        $this->client->request('GET', '/tasks/'. $this->userTask->getId() .'/delete');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains( "La tâche a bien été supprimée.", $crawler->filter('div.alert.alert-success')->text());
+        $this->assertEmpty(self::getInsertTaskFromUser());
+    }
+
 
     //Needed for auth
     public function logAsAdmin ()
