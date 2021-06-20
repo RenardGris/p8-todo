@@ -131,13 +131,6 @@ class TaskControllerTest extends WebTestCase
         $this->assertEmpty(self::getInsertTask());
     }
 
-    public function testToggleTaskAction()
-    {
-        self::logAsAdmin();
-        $this->client->request('GET', '/tasks/45/toggle');
-        $crawler =  $this->client->followRedirect();
-        $this->assertContains(" a bien été marquée comme faite.", $crawler->filter('div.alert.alert-success')->text());
-    }
 
     //Needed for auth
     public function logAsAdmin ()
