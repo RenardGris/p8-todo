@@ -9,16 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
-    private $task;
 
     private $client;
 
     private $objectManager;
 
+    private $task;
+
+    private $userTask;
+
     public function setUp()
     {
         $this->client = static::createClient();
         $this->objectManager = static::$kernel->getContainer()->get('doctrine')->getManager();
+        $this->task = self::getInsertTask();
+        $this->userTask = self::getInsertTaskFromUser();
     }
 
     //check if /task request return http code is equal to 200
