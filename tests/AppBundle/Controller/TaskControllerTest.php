@@ -56,6 +56,7 @@ class TaskControllerTest extends WebTestCase
         ]);
         $crawler =  $this->client->followRedirect();
         $this->assertContains( "La tâche a été bien été ajoutée.", $crawler->filter('div.alert.alert-success')->text());
+        $this->assertSame("Tache de test", self::getInsertTask()->getTitle());
     }
 
     //update task and check if alert contain validation text
