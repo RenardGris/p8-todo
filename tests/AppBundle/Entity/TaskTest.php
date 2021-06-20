@@ -4,6 +4,7 @@ namespace Tests\AppBundle\Entity;
 
 
 use AppBundle\Entity\Task;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskTest extends WebTestCase
@@ -43,6 +44,12 @@ class TaskTest extends WebTestCase
     {
         $this->task->toggle(true);
         $this->assertSame(true, $this->task->isDone());
+    }
+
+    public function testUsers()
+    {
+        $this->task->setUser(new User());
+        $this->assertInstanceOf(User::class, $this->task->getUser());
     }
 
 }
