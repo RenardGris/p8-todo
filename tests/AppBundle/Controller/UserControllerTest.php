@@ -27,6 +27,13 @@ class UserControllerTest extends WebTestCase
         static::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode() );
     }
 
+    public function testListActionAsUser()
+    {
+        self::logAsUser();
+        $this->client->request('GET', '/users');
+        static::assertEquals(403, $this->client->getResponse()->getStatusCode() );
+    }
+
     //Insert new user and check if alert contain validation text
     public function testCreateAction()
     {
