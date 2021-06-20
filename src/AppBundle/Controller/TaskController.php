@@ -84,7 +84,7 @@ class TaskController extends Controller
     public function deleteTaskAction(Task $task)
     {
         $flash = ['type' => 'error', 'message' => "Vous n'avez pas les autorisations requises"];
-        if($task->getUser() === $this->getUser()  || $task->hasAnonUser() && $this->getUser()->getRoles() === 'ROLE_ADMIN')
+        if($task->getUser() === $this->getUser()  || $task->hasAnonUser() && $this->getUser()->getRoles()[0] === 'ROLE_ADMIN')
         {
             $flash = ['type' => 'success', 'message' => "La tâche a bien été supprimée."];
             $em = $this->getDoctrine()->getManager();
