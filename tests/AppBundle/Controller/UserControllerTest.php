@@ -10,9 +10,13 @@ class UserControllerTest extends WebTestCase
 {
     private $client;
 
+    private $objectManager;
+
     public function setUp()
     {
         $this->client = static::createClient();
+        $this->objectManager = static::$kernel->getContainer()->get('doctrine')->getManager();
+
     }
 
     //check if /user request return http code is equal to 200
