@@ -12,9 +12,12 @@ class TaskControllerTest extends WebTestCase
 
     private $client;
 
+    private $objectManager;
+
     public function setUp()
     {
         $this->client = static::createClient();
+        $this->objectManager = static::$kernel->getContainer()->get('doctrine')->getManager();
     }
 
     //check if /task request return http code is equal to 200
