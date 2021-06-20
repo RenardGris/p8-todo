@@ -89,6 +89,25 @@ class TaskControllerTest extends WebTestCase
         $this->assertContains( "La tâche a bien été modifié", $crawler->filter('div.alert.alert-success')->text());
     }
 
+
+
+    public function testToggleTaskAction()
+    {
+        self::logAsAdmin();
+        $this->client->request('GET', '/tasks/'. $this->task->getId() .'/toggle');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains(" a bien été marquée comme faite.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
+    //toggle user's task
+    public function testToggleTaskActionAsUser()
+    {
+        self::logAsUser();
+        $this->client->request('GET', '/tasks/'. $this->userTask->getId() .'/toggle');
+        $crawler =  $this->client->followRedirect();
+        $this->assertContains(" a bien été marquée comme faite.", $crawler->filter('div.alert.alert-success')->text());
+    }
+
     //delete task and check if alert contain validation text
     public function testDeleteTaskAction()
     {
