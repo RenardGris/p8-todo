@@ -109,4 +109,8 @@ class Task
         return $this->user;
     }
 
+    public function hasAnonUser()
+    {
+        return !(self::getUser() !== null);
+    }
 }
