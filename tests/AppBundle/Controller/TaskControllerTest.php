@@ -54,7 +54,6 @@ class TaskControllerTest extends WebTestCase
             "task[title]" => "Tache de test",
             "task[content]" => "Tache enregistrée lors d'un test fonctionnel"
         ]);
-        $this->client->submit($form);
         $crawler =  $this->client->followRedirect();
         $this->assertContains( "La tâche a été bien été ajoutée.", $crawler->filter('div.alert.alert-success')->text());
     }
