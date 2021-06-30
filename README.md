@@ -8,7 +8,7 @@ Finally, I had to make a guide for the next developers who's gonna take this pro
 
 ## Installation
 
-###Setting up
+### Setting up
 1.  get project from repository
 ```
 git clone https://github.com/RenardGris/p8-todo.git
@@ -23,7 +23,7 @@ composer install
   (In case of mistake you can edit the information in your parameters.yml file in app/config)
 
 
-###Database
+### Database
 3.  Next, you can run the next command line :
 - 3.1 create database
 ``` 
@@ -39,7 +39,7 @@ composer install
 ```
 
 
-###Tests
+### Tests
 4. In case you want to run test : 
 - 4.1 set your db information in app/config/config_test.yml
 ``` yml

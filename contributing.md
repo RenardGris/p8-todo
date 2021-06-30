@@ -1,4 +1,4 @@
-##Contributing
+## Contributing
 
 ### Disclaimer
 This information can change, so please check it before in composer.json
